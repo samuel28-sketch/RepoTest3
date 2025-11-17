@@ -3,6 +3,7 @@
 // Graphics Libraries
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 public class BasicGameApp implements Runnable {
@@ -11,25 +12,27 @@ public class BasicGameApp implements Runnable {
     final int WIDTH = 1000;
     final int HEIGHT = 700;
 
-
     //Variable Definition Section
     //You can set their initial values too
     // Like Mario mario = new Mario(); //
 Charater mario;
+KeyInput keyInput;
 
 
 
 
     // Initialize your variables and construct your program objects here.
     public BasicGameApp() { // BasicGameApp constructor
+        keyInput = new KeyInput(this);
         setUpGraphics();
+
 
         //variable and objects
         //create (construct) the objects needed for the game
 
         mario = new Charater(500, 350, 1, 1, 100,50);
         mario.name = "mario";
-        mario.image = Toolkit.getDefaultToolkit().getImage("mario.png");
+        mario.image = Toolkit.getDefaultToolkit().getImage("mario.jpeg");
 
 
     }
@@ -37,7 +40,19 @@ Charater mario;
 
     public void moveThings() {
         //call the move() code for each object  -
+        //    mario.move('d');
+        if (keyInput.isKeyDown(KeyEvent.VK_W) || keyInput.isKeyDown(KeyEvent.VK_S)) {
+            mario.dy += .2;
+        }
+        if (keyInput.isKeyDown(KeyEvent.VK_A) || keyInput.isKeyDown(KeyEvent.VK_D)) {
+            mario.dx += .2;
+        }
+       /* if (keyInput.anyKeyDown() == false) {
+         mario.dx*=.9;
+         mario.dy*=.9;
+         mario.move(mario.lastdirection);
 
+        } */
     }
 
     //Paints things on the screen using bufferStrategy
@@ -71,6 +86,8 @@ Charater mario;
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv DON'T CHANGE! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     //Declare the variables needed for the graphics
+
+
     public JFrame frame;
     public Canvas canvas;
     public JPanel panel;
@@ -131,8 +148,66 @@ Charater mario;
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
         canvas.requestFocus();
+
+        canvas.addKeyListener(keyInput); //dont rly under stand Keylistener yet
         System.out.println("DONE graphic setup");
     }
+    public void keyPressed(KeyEvent e){ //yt tutorial by RealTutsGML
+        int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_W){
+            mario.move('w');
+      //      if (KeyInput.isKeyDown(KeyEvent.VK_W)){dy--;}
+        }
+        if(key == KeyEvent.VK_S){
+            mario.move('s');
+        }
+        if(key == KeyEvent.VK_A){
+            mario.move('a');
+        }
+        if(key == KeyEvent.VK_D){
+            mario.move('d');
+        }
+    }
+//PROBLEM: KEYS INVERT DIRECTION AFTER LIKE THE FIRST PRESS
+    public void keyReleased(KeyEvent e){
+        int key = e.getKeyCode();
+
+        mario.dx=1;
+        mario.dy=1;
+
+
+
+       /* if (keyInput.isKeyDown(KeyEvent.VK_W)){
+            mario.dy--;
+        }
+        else if (keyInput.isKeyDown(KeyEvent.VK_W)){
+            mario.dx--;
+        }
+        else if (keyInput.isKeyDown(KeyEvent.VK_W)){
+            mario.dx++;
+        }
+        else if (keyInput.isKeyDown(KeyEvent.VK_W)){
+            mario.dy++;
+        } */
+
+
+
+
+   /*     if(key == KeyEvent.VK_W){
+            mario.move('w');
+        }
+        else if(key == KeyEvent.VK_S){
+            mario.move('s');
+        }
+        else if(key == KeyEvent.VK_A){
+            mario.move('a');
+        }
+        else if(key == KeyEvent.VK_D){
+            mario.move('d');
+        } */
+    }
+
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 }

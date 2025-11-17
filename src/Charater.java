@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Charater {
     String name;
@@ -9,6 +10,8 @@ public class Charater {
     double dy;
     int width;
     int height;
+    char lastdirection;
+
     Rectangle hitbox;
 
     public Charater(){
@@ -25,26 +28,57 @@ public class Charater {
         hitbox = new Rectangle(xpos,ypos,width,height);
     }
 
+    public void keyInput(){}
 
-/*    public void move(char key) {
+
+    public void move(char key) {
         if (key == 'w') {
-            ypos = ypos + speed;
+            ypos = ypos - (int)dy;
+            lastdirection = 'w';
             System.out.println("x=" + xpos + "y=" + ypos);
         }
-        if (key == 's') {
-            ypos = ypos - speed;
+        else if (key == 's') {
+            ypos = ypos + (int)dy;
+            lastdirection = 's';
             System.out.println("x=" + xpos + "y=" + ypos);
         }
-        if (key == 'd') {
-            xpos = xpos + speed;
+        else if (key == 'd') {
+            xpos = xpos + (int)dx;
+            lastdirection = 'd';
             System.out.println("x=" + xpos + "y=" + ypos);
         }
-        if (key == 'a') {
-            xpos = xpos - speed;
+        else if (key == 'a') {
+            xpos = xpos - (int)dx;
+            lastdirection = 'a';
             System.out.println("x=" + xpos + "y=" + ypos);
         }
 
-    } */
+        if (xpos>1000){
+            xpos = 0;
+        }
+        else if (xpos<0){
+            xpos=1000;
+        }
+        if (ypos>700){
+            ypos = 0;
+        }
+        else if (ypos<0){
+            ypos=700;
+        }
+    /*    if (xpos>900||xpos<0){
+            xpos = xpos*-1;
+            dx=dx*-1;
+
+        }
+        if (ypos>700||ypos<0){
+            dy=dy*-1;
+            ypos = ypos*-1;
+
+        } */
+
+
+
+    }
 
     public static void main(String[] args) {
 
